@@ -2,21 +2,31 @@ import { Pokemon } from "@/pokemons/interfaces/pokemon"
 import { Metadata } from "next"
 import { notFound } from "next/navigation"
 import Image from "next/image"
+import { PokemonsResponse } from "@/pokemons/interfaces/pokemons-response"
 
 interface Props {
-  params: {id: string}
+  params: {name: string}
 }
 
 export async function generateStaticParams(){
-  const static151Pokemons = Array.from({length: 151}).map((v, i) => `${i + 1}`)
 
-  return static151Pokemons.map( id => ({
-    id: id
+  const data:PokemonsResponse = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=151`)
+  .then(res => res.json())
+
+  const static151Pokemons = data.results.map( pokemon => (
+      {
+        name: pokemon.name
+      }
+    ) 
+  )
+
+  return static151Pokemons.map( ({name}) => ({
+    name: name
   }) )
 }
 
 export async function generateMetadata({params}: Props): Promise<Metadata>{
-  const {id, name} = await getPokemon(params.id)
+  const {id, name} = await getPokemonName(params.name)
 
   return {
     title: `${id} - ${name}`,
@@ -24,15 +34,18 @@ export async function generateMetadata({params}: Props): Promise<Metadata>{
   }
 }
 
-const getPokemon = async(id: string): Promise<Pokemon> => {
+const getPokemonName = async(name: string): Promise<Pokemon> => {
   try {
-    const pokemon = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`, {
-      cache: "force-cache"
+    const pokemonName = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`, {
+      next: {
+        revalidate: 60 * 60 * 30 * 6
+      }
+      // cache: "force-cache"
     }).then(res => res.json())
   
-    console.log('se cargo: ', pokemon.name)
+    // console.log('se cargo: ', pokemonName.name)
   
-    return pokemon;
+    return pokemonName;
   } catch (error) {
     notFound()
   }
@@ -40,7 +53,7 @@ const getPokemon = async(id: string): Promise<Pokemon> => {
 
 export default async function PokemonPage({ params }: Props) {
 
-  const pokemon = await getPokemon(params.id);
+  const pokemon = await getPokemonName(params.name);
 
   return (
     <div className="flex mt-5 flex-col items-center text-slate-800">
