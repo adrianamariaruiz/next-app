@@ -2,7 +2,6 @@ import PokemonGrid from "@/pokemons/components/PokemonGrid"
 import { PokemonsResponse } from "@/pokemons/interfaces/pokemons-response"
 import { SimplePokemon } from "@/pokemons/interfaces/simple-pokemon"
 
-
 export const metadata = {
  title: 'Pokemones',
  description: 'Visualización de 151 pokemones',
@@ -23,7 +22,6 @@ const getPokemons = async(limit = 20, offset = 0): Promise<SimplePokemon[]> => {
   return pokemons
 }
 
-
 export default async function PokemonsPage() {
 
   const pokemons = await getPokemons(151)
@@ -35,3 +33,5 @@ export default async function PokemonsPage() {
     </div>
   );
 }
+
+
