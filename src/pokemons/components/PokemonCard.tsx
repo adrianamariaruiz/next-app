@@ -18,7 +18,6 @@ const PokemonCard = ({pokemon}:Props) => {
   const dispatch = useAppDispatch()
   
   const onToogleFavorite = () => {
-    console.log('click', pokemon)
     dispatch(toggleFavorite(pokemon))
   }
 
@@ -62,11 +61,6 @@ const PokemonCard = ({pokemon}:Props) => {
                     isFavorite ? 'Es favorito' : 'No es favorito'
                   }
                 </p>
-                {/* <p className="text-xs text-gray-500">
-                  {
-                    isFavorite ? 'Quitar de favoritos' : 'Agregar a favoritos'
-                  }
-                </p> */}
               </div>
             </div>
           </div>

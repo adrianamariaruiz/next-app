@@ -43,8 +43,6 @@ const getPokemonName = async(name: string): Promise<Pokemon> => {
       // cache: "force-cache"
     }).then(res => res.json())
   
-    // console.log('se cargo: ', pokemonName.name)
-  
     return pokemonName;
   } catch (error) {
     notFound()
