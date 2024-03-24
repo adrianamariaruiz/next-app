@@ -1,7 +1,8 @@
 import Image from 'next/image'
 import React from 'react'
-import { IoBrowsersOutline, IoCalculator, IoHeartOutline, IoLogoReact, IoSnow } from 'react-icons/io5'
+import { IoBrowsersOutline, IoCalculator, IoDiscSharp, IoHeartOutline, IoLogoReact, IoSnow } from 'react-icons/io5'
 import SidebarMenuItem from './SidebarMenuItem'
+import perfilPhoto from '.././app/favicon.ico'
 
 const menuItems = [
   {
@@ -18,7 +19,7 @@ const menuItems = [
   },
   {
     path: '/dashboard/pokemons',
-    icon: <IoSnow size={40}/>,
+    icon: <IoDiscSharp size={40}/>,
     title: 'Pokemons',
     subtitle: 'Estaticos'
   },
@@ -48,7 +49,8 @@ const Sidebar = () => {
           <span>
             <Image 
               className="rounded-full w-8 h-8" 
-              src="https://images.unsplash.com/photo-1542909168-82c3e7fdca5c"
+              // src="https://images.unsplash.com/photo-1542909168-82c3e7fdca5c"
+              src={perfilPhoto}
               alt="user photo" 
               width={50}
               height={50}
